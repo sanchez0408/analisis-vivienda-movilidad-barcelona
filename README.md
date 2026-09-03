@@ -19,6 +19,15 @@ Barcelona**, la **Generalitat de Catalunya / INCASÒL**, **Idescat** y la
 > **Períodos de referencia:** vivienda y renta 2019-2023 · coste de
 > vida 2023 · movilidad GTFS 2026
 
+## Consultas SQL
+
+El procesamiento de los datos GTFS y el análisis de conectividad
+se realizaron en BigQuery mediante GoogleSQL.
+
+- [Oferta diaria de transporte](sql/01_oferta_transporte_gtfs.sql)
+- [Líneas de transporte por barrio](sql/02_lineas_por_barrio.sql)
+- [Conectividad directa entre barrios](sql/03_conectividad_barrios.sql)
+
 **[Explorar el informe interactivo en Power BI](https://app.powerbi.com/view?r=eyJrIjoiMjdiZTE4YTUtMzQ1Mi00ODE1LWIxZTYtYWExNjljNzc0NzIwIiwidCI6IjRmNTk4MmIyLWQ1MzgtNDVkMC05OWFiLTdkZWIyMjU2ODFkYSJ9)**
 
 ![Presentación del proyecto](images/presentacion.png)
