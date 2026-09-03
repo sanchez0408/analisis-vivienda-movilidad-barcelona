@@ -1,4 +1,4 @@
-# Barcelona --- Vivienda, renta, coste de vida y movilidad
+# Barcelona - Vivienda, renta, coste de vida y movilidad
 
 ### Análisis de los 73 barrios de Barcelona
 
@@ -16,10 +16,10 @@ Barcelona**, la **Generalitat de Catalunya / INCASÒL**, **Idescat** y la
 **Autoritat del Transport Metropolità (ATM)**, procesados mediante
 **Power BI, Power Query, BigQuery, SQL, DAX y Excel**.
 
-> **Períodos de referencia:** vivienda y renta 2019--2023 · coste de
+> **Períodos de referencia:** vivienda y renta 2019-2023 · coste de
 > vida 2023 · movilidad GTFS 2026
 
-**[Explorar el informe interactivo en Power BI](ENLACE_POWER_BI)**
+**[Explorar el informe interactivo en Power BI](https://app.powerbi.com/view?r=eyJrIjoiMjdiZTE4YTUtMzQ1Mi00ODE1LWIxZTYtYWExNjljNzc0NzIwIiwidCI6IjRmNTk4MmIyLWQ1MzgtNDVkMC05OWFiLTdkZWIyMjU2ODFkYSJ9)**
 
 ![Presentación del proyecto](images/presentacion.png)
 
@@ -63,24 +63,24 @@ El proyecto utiliza principalmente fuentes públicas y oficiales.
 
 ### Vivienda
 
-**Ajuntament de Barcelona / Generalitat de Catalunya --- INCASÒL**
+**Ajuntament de Barcelona / Generalitat de Catalunya - INCASÒL**
 
 Datos de alquiler elaborados a partir de las fianzas de los contratos
 depositadas en INCASÒL.
 
--   **Período utilizado:** 2019--2023
+-   **Período utilizado:** 2019-2023
 -   **Unidad principal:** alquiler mensual medio por vivienda y barrio
 -   **Fuente oficial:** [Anuari Estadístic de la Ciutat de
     Barcelona](https://bcnroc.ajuntament.barcelona.cat/jspui/bitstream/11703/143700/6/Anuari%20Barcelona%202024.WEB%20%282%29.pdf)
 
 ### Renta
 
-**Ajuntament de Barcelona --- Departamento de Estadística y Difusión de
+**Ajuntament de Barcelona - Departamento de Estadística y Difusión de
 Datos**
 
 Renta disponible de los hogares por persona y por barrio.
 
--   **Período utilizado:** 2019--2023
+-   **Período utilizado:** 2019-2023
 -   **Unidad:** renta disponible anual por persona
 -   Para facilitar la comparación con el alquiler, la renta anual se
     transforma en equivalente mensual dividiendo entre 12.
@@ -89,7 +89,7 @@ Renta disponible de los hogares por persona y por barrio.
 
 ### Coste de vida
 
-**Idescat --- Estadística de gasto en consumo de los hogares / Encuesta
+**Idescat - Estadística de gasto en consumo de los hogares / Encuesta
 de Presupuestos Familiares (EPF)**
 
 Datos de gasto medio por persona según categorías de consumo.
@@ -102,7 +102,7 @@ Datos de gasto medio por persona según categorías de consumo.
     categoría para la ciudad.
 -   Los gastos de vivienda se excluyen del cálculo para evitar doble
     contabilización con el alquiler.
--   **Fuente oficial:** [Idescat --- gasto anual por grupos de gasto
+-   **Fuente oficial:** [Idescat - gasto anual por grupos de gasto
     ECOICOP/EPF](https://idescat.cat/pub/?id=edcl&lang=ca&n=9433)
 
 > **Nota metodológica:** Idescat señala una ruptura de serie en los
@@ -112,12 +112,12 @@ Datos de gasto medio por persona según categorías de consumo.
 
 ### Movilidad
 
-**Autoritat del Transport Metropolità (ATM) --- datos GTFS**
+**Autoritat del Transport Metropolità (ATM) - datos GTFS**
 
 El feed utilizado se identifica como `ATM` en el archivo `feed_info` y
 agrupa información de transporte en formato GTFS.
 
--   **Período analizado:** 5 de agosto de 2026 -- 31 de diciembre de
+-   **Período analizado:** 5 de agosto de 2026 - 31 de diciembre de
     2026
 -   **Modos retenidos en el proyecto:** Autobús TMB y Metro/FGC
 -   **Excluidos del análisis:** Rodalies, Tram, otros operadores de
@@ -125,7 +125,7 @@ agrupa información de transporte en formato GTFS.
 -   Los datos representan **oferta programada**, no circulación en
     tiempo real.
 -   **Referencia institucional:** [Observatorio de la Movilidad en
-    Cataluña --- datos abiertos y
+    Cataluña - datos abiertos y
     GTFS](https://ce-sermetra.atm.cat/es/web/observatori/w/open-data-tpc-inerurbans-generalitat)
 
 ------------------------------------------------------------------------
@@ -143,7 +143,7 @@ Power Query / BigQuery
        ↓
 Limpieza y transformación
        ↓
-SQL — Procesamiento GTFS y conectividad
+BigQuery / SQL — Procesamiento GTFS y conectividad
        ↓
 Modelo de datos Power BI
        ↓
@@ -156,18 +156,18 @@ Herramienta «¿Dónde vivir?»
 
 ### Herramientas utilizadas
 
-**Power BI** --- visualización, modelo de datos e informe interactivo.
+**Power BI** - visualización, modelo de datos e informe interactivo.
 
-**Power Query** --- preparación, limpieza y transformación de los datos
+**Power Query** - preparación, limpieza y transformación de los datos
 integrados en Power BI.
 
-**BigQuery + SQL** --- procesamiento de los archivos GTFS, construcción
+**BigQuery / SQL** - procesamiento de los archivos GTFS, construcción
 de la oferta diaria y análisis de conectividad entre barrios.
 
-**DAX** --- indicadores, comparaciones temporales, contexto de filtros y
+**DAX** - indicadores, comparaciones temporales, contexto de filtros y
 lógica del simulador.
 
-**Excel** --- preparación y controles complementarios sobre determinadas
+**Excel** - preparación y controles complementarios sobre determinadas
 fuentes.
 
 ------------------------------------------------------------------------
@@ -283,7 +283,7 @@ distintos.
 
 ## 6. Deterioro reciente de la accesibilidad residencial
 
-El análisis temporal **2021--2023** permitió detectar barrios cuya
+El análisis temporal **2021-2023** permitió detectar barrios cuya
 relación entre alquiler y renta se deterioró rápidamente.
 
 El caso extremo es **la Marina del Prat Vermell**, cuya evolución está
@@ -644,7 +644,7 @@ sino a una pregunta más útil:
 
 **Power BI · Power Query · DAX · BigQuery · SQL · Excel**
 
-**73 barrios · Vivienda y renta: 2019--2023 · Coste de vida: 2023 ·
+**73 barrios · Vivienda y renta: 2019-2023 · Coste de vida: 2023 ·
 Movilidad GTFS: 2026**
 
 ------------------------------------------------------------------------
