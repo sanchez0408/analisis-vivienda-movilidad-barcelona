@@ -1,666 +1,478 @@
-# Barcelona - Vivienda, renta, coste de vida y movilidad
+# Barcelona — Análisis de vivienda, renta, coste de vida y movilidad
 
-### Análisis de los 73 barrios de Barcelona
+### Análisis comparativo de los 73 barrios de Barcelona con Power BI
 
-Este proyecto analiza las diferencias entre los **73 barrios de
-Barcelona** en términos de alquiler, renta disponible, accesibilidad a
-la vivienda, coste de vida y transporte público.
+Este proyecto analiza las diferencias económicas y de movilidad entre los **73 barrios de Barcelona** con el objetivo de ayudar a identificar qué zonas pueden adaptarse mejor a diferentes presupuestos y prioridades.
 
-El objetivo no es identificar un único *«mejor barrio para vivir»*, sino
-construir una herramienta de análisis que permita comprender los
-**compromisos entre coste de la vivienda, recursos económicos y
-movilidad urbana**.
+El análisis integra datos oficiales sobre **alquiler, renta disponible, coste de vida y transporte público**, combinando diferentes periodos y fuentes públicas en un único modelo de Power BI.
 
-El proyecto combina datos públicos y oficiales del **Ajuntament de
-Barcelona**, la **Generalitat de Catalunya / INCASÒL**, **Idescat** y la
-**Autoritat del Transport Metropolità (ATM)**, procesados mediante
-**Power BI, Power Query, BigQuery, SQL, DAX y Excel**.
+> **Periodo analizado:** 2019–2026  
+> **Ámbito geográfico:** 73 barrios de Barcelona  
+> **Herramientas:** Power BI · Power Query · DAX · BigQuery / SQL  
+> **Fuentes principales:** Ajuntament de Barcelona · Generalitat de Catalunya / INCASÒL · Idescat · ATM
 
-> **Períodos de referencia:** vivienda y renta 2019-2023 · coste de
-> vida 2023 · movilidad GTFS 2026
+![Barcelona Dashboard](images_v2/presentacion_barcelona.png)
 
-## Consultas SQL
+### Dashboard interactivo
 
-El procesamiento de los datos GTFS y el análisis de conectividad
-se realizaron en BigQuery mediante GoogleSQL.
+ **[Explorar el informe en Power BI](AQUÍ_TU_ENLACE_POWER_BI)**
 
-- [Oferta diaria de transporte](sql/01_oferta_transporte_gtfs.sql)
-- [Líneas de transporte por barrio](sql/02_lineas_por_barrio.sql)
-- [Conectividad directa entre barrios](sql/03_conectividad_barrios.sql)
+---
 
-**[Explorar el informe interactivo en Power BI](https://app.powerbi.com/view?r=eyJrIjoiMjdiZTE4YTUtMzQ1Mi00ODE1LWIxZTYtYWExNjljNzc0NzIwIiwidCI6IjRmNTk4MmIyLWQ1MzgtNDVkMC05OWFiLTdkZWIyMjU2ODFkYSJ9)**
+## El proyecto en pocas palabras
 
-![Presentación del proyecto](images/presentacion.png)
+| Dimensión | Datos utilizados | Periodo |
+|---|---|---|
+|  Alquiler | Contratos de alquiler registrados | 2019–2026* |
+|  Renta disponible | Renta disponible de los hogares per cápita | 2019–2023 |
+|  Coste de vida | Encuesta de Presupuestos Familiares | 2024 |
+|  Movilidad | Oferta programada TMB y Metro / FGC | 2026 |
 
-*Vista general del proyecto, fuentes de datos y herramientas
-utilizadas.*
+\* Los datos de alquiler de 2026 corresponden a un periodo parcial.
 
-------------------------------------------------------------------------
+Para la página **¿Dónde vivir?**, el proyecto construye además una comparación homogénea para **2025**, utilizando el alquiler oficial de 2025 y estimaciones de renta disponible y coste de vida basadas en datos oficiales y tendencias recientes.
 
-## 1. Pregunta de análisis
+---
 
-Barcelona presenta importantes diferencias territoriales tanto en el
-mercado de la vivienda como en la distribución de la renta y en el
-acceso al transporte público.
+##  Objetivo del análisis
 
-A partir de esta situación, el proyecto intenta responder a una pregunta
-principal:
+Barcelona presenta fuertes diferencias entre barrios en términos de **precio del alquiler, renta disponible, coste de vida y acceso al transporte público**.
 
-> **¿Cómo varían las condiciones para vivir entre los barrios de
-> Barcelona cuando se analizan conjuntamente vivienda, renta, coste de
-> vida y movilidad?**
+El objetivo de este proyecto es analizar conjuntamente estas dimensiones para responder a una pregunta principal:
 
-El análisis se articula alrededor de varias preguntas:
+> **¿Cómo cambian las condiciones económicas y de movilidad entre los 73 barrios de Barcelona y qué barrios pueden adaptarse mejor a diferentes perfiles y presupuestos?**
 
--   ¿Cómo han evolucionado los alquileres entre 2019 y 2023?
--   ¿Cómo se distribuye la renta disponible entre los barrios?
--   ¿Dónde existe una mayor presión entre alquiler y renta?
--   ¿Qué barrios han experimentado un deterioro reciente de esta
-    relación?
--   ¿Cómo se distribuye la oferta programada de transporte público?
--   ¿Qué barrios presentan una mayor conectividad directa?
--   ¿Puede un barrio relativamente asequible presentar una movilidad
-    limitada?
--   ¿Por qué no existe necesariamente un único barrio óptimo para todos
-    los perfiles?
+Para responder a esta pregunta, el análisis se estructura en cuatro dimensiones:
 
-------------------------------------------------------------------------
+-  **Vivienda:** evolución y diferencias del precio medio del alquiler.
+-  **Renta:** distribución de la renta disponible y esfuerzo económico asociado al alquiler.
+-  **Coste de vida:** estimación de los gastos mensuales por persona, excluyendo la vivienda.
+-  **Movilidad:** oferta programada de transporte público y conexiones directas entre barrios.
 
-## 2. Fuentes de datos
+El proyecto no pretende identificar un único «mejor barrio», sino proporcionar indicadores que permitan comparar diferentes alternativas según las prioridades de cada usuario.
 
-El proyecto utiliza principalmente fuentes públicas y oficiales.
+---
 
-### Vivienda
+## Estructura del dashboard
 
-**Ajuntament de Barcelona / Generalitat de Catalunya - INCASÒL**
+El informe está organizado como un recorrido progresivo: parte de los principales indicadores económicos de los barrios, analiza la movilidad y termina con una herramienta interactiva de comparación.
 
-Datos de alquiler elaborados a partir de las fianzas de los contratos
-depositadas en INCASÒL.
+### Alquiler
+Analiza la evolución del precio medio del alquiler por barrio entre **2019 y 2026**, utilizando datos oficiales de contratos registrados.
 
--   **Período utilizado:** 2019-2023
--   **Unidad principal:** alquiler mensual medio por vivienda y barrio
--   **Fuente oficial:** [Anuari Estadístic de la Ciutat de
-    Barcelona](https://bcnroc.ajuntament.barcelona.cat/jspui/bitstream/11703/143700/6/Anuari%20Barcelona%202024.WEB%20%282%29.pdf)
+Permite identificar diferencias territoriales, tendencias históricas y barrios con niveles de alquiler especialmente altos o bajos.
 
-### Renta
+> **Nota:** los datos de 2026 son parciales y no representan un año completo.
 
-**Ajuntament de Barcelona - Departamento de Estadística y Difusión de
-Datos**
+###  Renta
+Estudia la **renta disponible de los hogares per cápita** en los 73 barrios de Barcelona durante el periodo oficial disponible **2019–2023**.
 
-Renta disponible de los hogares por persona y por barrio.
+Permite comparar niveles de renta y su evolución territorial.
 
--   **Período utilizado:** 2019-2023
--   **Unidad:** renta disponible anual por persona
--   Para facilitar la comparación con el alquiler, la renta anual se
-    transforma en equivalente mensual dividiendo entre 12.
--   **Fuente oficial:** [Anuari Estadístic de la Ciutat de Barcelona
-    2024](https://bcnroc.ajuntament.barcelona.cat/jspui/bitstream/11703/143700/3/Anuari%20Barcelona%202024.WEB%20%281%29.pdf)
+### Accesibilidad a la vivienda
+Relaciona el alquiler mensual con la renta disponible mensual mediante la **carga del alquiler**:
+
+`Carga del alquiler (%) = Alquiler mensual / Renta disponible mensual × 100`
+
+Este indicador permite evaluar qué proporción de la renta disponible representa el alquiler en cada barrio.
+
+### Coste de vida
+Analiza el gasto medio mensual por persona a partir de la **Encuesta de Presupuestos Familiares 2024**, excluyendo la vivienda para evitar una doble contabilización con el alquiler.
+
+Los gastos se agrupan en tres categorías:
+
+**Esencial · Necesario variable · Discrecional**
+
+### Oferta de transporte público
+Analiza la oferta programada de **autobús TMB y Metro/FGC** a partir de datos GTFS 2026.
+
+Permite comparar la intensidad del servicio entre barrios y observar diferencias entre días laborables y fines de semana.
+
+### Conectividad entre barrios
+Analiza qué barrios están conectados directamente mediante al menos una línea de autobús TMB o Metro/FGC.
+
+La conectividad representa **conexiones directas sin transbordo**, no tiempos de viaje ni demanda real.
+
+### ¿Dónde vivir?
+Integra vivienda, renta, coste de vida y movilidad en una página interactiva orientada a la toma de decisiones.
+
+La comparación económica se homogeneiza en **2025** mediante:
+
+- alquiler oficial 2025;
+- renta disponible estimada 2025;
+- coste de vida estimado 2025;
+- red de transporte GTFS 2026.
+
+El usuario puede seleccionar diferentes categorías de gasto y comparar cómo cambian el coste mensual total, la renta restante y los indicadores de movilidad según el barrio.
+
+---
+
+## Datos y fuentes
+
+El proyecto combina diferentes fuentes públicas con distintas granularidades y periodos temporales. Para mantener la trazabilidad del análisis, se distingue entre **datos oficiales**, **estimaciones propias** y **datos utilizados como referencia territorial**.
+
+| Dimensión | Fuente | Granularidad | Periodo | Tipo |
+|---|---|---|---|---|
+|  Alquiler | Ajuntament de Barcelona / Generalitat de Catalunya – INCASÒL | Barrio | 2019–2026* | Oficial |
+|  Renta disponible | Ajuntament de Barcelona – Departament d’Estadística i Difusió de Dades | Barrio | 2019–2023 | Oficial |
+|  Coste de vida | Idescat – Encuesta de Presupuestos Familiares (EPF) | Catalunya | 2024 | Oficial / referencia territorial |
+|  Inflación | IPC 2025 por categorías | Catalunya | 2025 | Oficial |
+|  Transporte público | Autoritat del Transport Metropolità (ATM) – GTFS | Paradas, líneas y servicios | 2026 | Oficial |
+|  Geografía | Ajuntament de Barcelona | 73 barrios | — | Oficial |
+
+\* Los datos de alquiler de 2026 corresponden a un periodo parcial y no representan un año completo.
+
+### Alquiler
+
+Los datos proceden de la explotación estadística de las **fianzas de alquiler depositadas en INCASÒL** y permiten analizar el precio medio mensual de los contratos registrados por barrio.
+
+Por este motivo, los valores representan alquileres contractuales registrados y no deben interpretarse como precios actuales de oferta del mercado inmobiliario.
+
+### Renta disponible
+
+Se utiliza la **Renta Disponible de los Hogares per cápita (RDLpc)** publicada por el Ajuntament de Barcelona.
+
+El último año oficial utilizado a nivel de barrio es **2023**. Los valores posteriores utilizados en la página «¿Dónde vivir?» son estimaciones propias y se identifican explícitamente como tales.
 
 ### Coste de vida
 
-**Idescat - Estadística de gasto en consumo de los hogares / Encuesta
-de Presupuestos Familiares (EPF)**
+El análisis parte de la **Encuesta de Presupuestos Familiares (EPF) 2024** publicada por Idescat.
 
-Datos de gasto medio por persona según categorías de consumo.
+Al no disponer de una desagregación equivalente para los 73 barrios de Barcelona, los datos de **Catalunya se utilizan como referencia territorial**.
 
--   **Año utilizado:** 2023
--   **Ámbito territorial:** Cataluña
--   **Clasificación:** ECOICOP/EPF, nivel detallado de 3 dígitos
--   Los datos de Cataluña se utilizan como **referencia para
-    Barcelona**, ya que no se dispone del mismo nivel de detalle por
-    categoría para la ciudad.
--   Los gastos de vivienda se excluyen del cálculo para evitar doble
-    contabilización con el alquiler.
--   **Fuente oficial:** [Idescat - gasto anual por grupos de gasto
-    ECOICOP/EPF](https://idescat.cat/pub/?id=edcl&lang=ca&n=9433)
-
-> **Nota metodológica:** Idescat señala una ruptura de serie en los
-> datos de 2023. Por ello, estos valores se utilizan como referencia
-> transversal de gasto y no para construir una evolución temporal
-> comparable con años anteriores.
+Los gastos relacionados con la vivienda se excluyen del cálculo para evitar una doble contabilización con el alquiler.
 
 ### Movilidad
 
-**Autoritat del Transport Metropolità (ATM) - datos GTFS**
+La oferta de transporte se construye a partir de datos **GTFS 2026 de la Autoritat del Transport Metropolità (ATM)**.
 
-El feed utilizado se identifica como `ATM` en el archivo `feed_info` y
-agrupa información de transporte en formato GTFS.
+El modelo procesa rutas, viajes, paradas, horarios y calendarios para estimar la oferta programada de autobús TMB y Metro/FGC por barrio.
 
--   **Período analizado:** 5 de agosto de 2026 - 31 de diciembre de
-    2026
--   **Modos retenidos en el proyecto:** Autobús TMB y Metro/FGC
--   **Excluidos del análisis:** Rodalies, Tram, otros operadores de
-    autobús, autocar y otros modos
--   Los datos representan **oferta programada**, no circulación en
-    tiempo real.
--   **Referencia institucional:** [Observatorio de la Movilidad en
-    Cataluña - datos abiertos y
-    GTFS](https://ce-sermetra.atm.cat/es/web/observatori/w/open-data-tpc-inerurbans-generalitat)
+Los indicadores representan **servicios programados**, no demanda de viajeros, puntualidad ni servicio realmente ejecutado.
 
-------------------------------------------------------------------------
+---
 
-## 3. Herramientas y flujo de trabajo
+## Metodología y estimaciones
 
-El proyecto no se limita a la construcción de visualizaciones. Los datos
-pasan por varias etapas de preparación, transformación, modelado y
-validación.
+Algunas dimensiones del proyecto no disponen todavía de datos oficiales para un mismo año de referencia.
 
-``` text
-Fuentes oficiales
-       ↓
-Power Query / BigQuery
-       ↓
-Limpieza y transformación
-       ↓
-BigQuery / SQL — Procesamiento GTFS y conectividad
-       ↓
-Modelo de datos Power BI
-       ↓
-DAX — Indicadores y lógica de análisis
-       ↓
-Dashboard interactivo
-       ↓
-Herramienta «¿Dónde vivir?»
-```
+Para construir una comparación económica coherente en la página **«¿Dónde vivir?»**, se utiliza **2025 como año de referencia** y se estiman únicamente las variables necesarias que todavía no están disponibles oficialmente con la granularidad requerida.
 
-### Herramientas utilizadas
+> Las estimaciones forman parte del modelo analítico y no deben interpretarse como datos oficiales.
 
-**Power BI** - visualización, modelo de datos e informe interactivo.
+### Estimación de la renta disponible 2025
 
-**Power Query** - preparación, limpieza y transformación de los datos
-integrados en Power BI.
+El último dato oficial disponible utilizado a nivel de barrio corresponde a **2023**.
 
-**BigQuery / SQL** - procesamiento de los archivos GTFS, construcción
-de la oferta diaria y análisis de conectividad entre barrios.
+La estimación se construye en dos etapas:
 
-**DAX** - indicadores, comparaciones temporales, contexto de filtros y
-lógica del simulador.
+**1. Estimación 2024**
 
-**Excel** - preparación y controles complementarios sobre determinadas
-fuentes.
+Se aplica a cada barrio la evolución anual observada para el conjunto de Barcelona:
 
-------------------------------------------------------------------------
+`Renta estimada 2024 = Renta oficial 2023 × 1,09`
 
-## 4. Metodología
+El crecimiento del **9,0 %** se aplica de forma homogénea. De esta manera, 2024 funciona como una transición macroeconómica sin introducir diferencias territoriales adicionales no observadas directamente.
 
-### 4.1. Indicador de presión entre alquiler y renta
+**2. Estimación 2025**
 
-Para comparar el coste del alquiler con los recursos económicos
-disponibles en cada barrio se construyó el siguiente indicador:
+La evolución reciente de la renta disponible de Barcelona durante 2025 se utiliza como referencia macroeconómica.
 
-> **Carga del alquiler = alquiler mensual promedio / renta disponible
-> mensual por persona × 100**
+Las variaciones interanuales trimestrales utilizadas son:
 
-Este indicador permite estudiar territorialmente la relación entre
-alquiler y renta.
+`T1 +5,7 % · T2 +6,3 % · T3 +3,9 % · T4 +5,2 %`
 
-Sin embargo, **no representa la tasa de esfuerzo real de un hogar**.
+Su media simple proporciona una referencia de:
 
-El numerador corresponde al alquiler medio de una vivienda, mientras que
-el denominador corresponde a la renta disponible por persona. Por tanto,
-debe interpretarse como un **indicador comparativo de presión
-residencial**, especialmente próximo al caso teórico de una persona
-soportando individualmente el alquiler completo.
+`5,275 %`
 
-Una variación de este indicador tampoco debe interpretarse
-automáticamente como una variación del alquiler: puede proceder del
-alquiler, de la renta disponible o de ambos componentes.
+Esta referencia no constituye una tasa anual oficial de RDLpc 2025, sino un **anclaje del modelo** construido a partir de la evolución trimestral disponible.
 
-![Accesibilidad a la vivienda](images/accesibilidad-vivienda.png)
+Para conservar parte de la dinámica territorial observada entre barrios, la tasa se ajusta mediante la evolución histórica de cada barrio durante **2021–2023**.
 
-*Relación entre el coste del alquiler y la renta disponible por
-persona.*
+El ajuste se normaliza, limita y recentra para evitar que las diferencias históricas produzcan proyecciones excesivas.
 
-### 4.2. Oferta de transporte
+La tasa final estimada por barrio se sitúa aproximadamente entre:
 
-Los archivos GTFS fueron procesados en **BigQuery mediante SQL**.
+`+4,85 % y +6,85 %`
 
-A partir de `calendar_date`, `trips`, `routes`, `stop_times` y las
-paradas previamente asociadas espacialmente a los barrios, se construyó
-una tabla de oferta diaria por fecha, barrio y modo de transporte.
+Finalmente:
 
-El indicador de oferta diaria representa la **intensidad del servicio
-programado** que sirve cada barrio.
+`Renta estimada 2025 = Renta estimada 2024 × (1 + tasa estimada 2025 del barrio)`
 
-No representa:
+Este método mantiene la tendencia general de Barcelona como referencia y utiliza la evolución histórica de los barrios únicamente como una **modulación controlada**, no como una extrapolación directa.
 
--   tiempo real de espera;
--   puntualidad;
--   duración del trayecto;
--   ocupación;
--   calidad percibida del servicio.
+### Estimación del coste de vida 2025
 
-![Oferta de transporte público](images/oferta-transporte.png)
+El punto de partida es el gasto oficial por persona de la **EPF 2024 de Catalunya**.
 
-*Intensidad de la oferta programada de Autobús TMB y Metro/FGC en 2026.*
+Para aproximar los valores de 2025, cada categoría de gasto se actualiza mediante su correspondiente evolución del **IPC 2025**.
 
-### 4.3. Conectividad entre barrios
+De forma simplificada:
 
-Se construyó una segunda dimensión de movilidad para distinguir
-**intensidad del servicio** y **alcance territorial**.
+`Coste categoría 2025 = Coste categoría 2024 × (1 + IPC categoría 2025)`
 
-> **Conexión directa:** dos barrios se consideran conectados cuando
-> comparten al menos una línea de Autobús TMB o Metro/FGC, sin necesidad
-> de transbordo.
+Esto permite conservar diferencias entre categorías de consumo en lugar de aplicar una única tasa de inflación a todos los gastos.
 
-A partir de pares únicos `barrio–route_id`, una auto-unión (*self join*)
-permite identificar los barrios que comparten una misma línea.
+La vivienda se mantiene excluida para evitar contabilizar dos veces el coste del alojamiento.
 
-Se calculan así:
+### Comparación final 2025
 
--   número de líneas disponibles;
--   número de barrios directamente conectados;
--   número de líneas compartidas entre cada par de barrios.
+La página **«¿Dónde vivir?»** combina:
 
-La conectividad directa **no mide el tiempo de viaje ni la conveniencia
-real del trayecto**.
+`Alquiler oficial 2025 + Renta estimada 2025 + Coste de vida estimado 2025`
 
-------------------------------------------------------------------------
+con los indicadores de movilidad derivados de la red **GTFS 2026**.
 
-## 5. Principales resultados
+De esta forma, las variables económicas se comparan sobre una misma referencia temporal, mientras que la movilidad representa la estructura más reciente de transporte utilizada en el proyecto.
 
-### 5.1. Un alquiler bajo no implica necesariamente una baja presión residencial
+---
 
-El análisis muestra que estudiar únicamente el precio del alquiler puede
-producir una imagen incompleta.
+## Principales resultados
 
-Algunos barrios presentan alquileres relativamente bajos pero también
-niveles de renta disponible reducidos. Por el contrario, determinados
-barrios con alquileres muy elevados presentan una presión relativa menor
-gracias a niveles de renta considerablemente superiores.
+El análisis muestra que las diferencias entre barrios de Barcelona no se explican únicamente por el precio del alquiler. La renta disponible, el coste relativo de la vivienda y la conectividad modifican de forma importante la lectura de cada zona.
 
-Esto muestra la importancia de analizar conjuntamente **precio y
-capacidad económica local**.
+### Fuertes diferencias en el mercado del alquiler
 
-### 5.2. Ciutat Vella presenta una presión residencial elevada
+El precio medio del alquiler presenta una elevada heterogeneidad entre los 73 barrios.
 
-Barrios como **el Raval, el Barri Gòtic, la Barceloneta y Sant Pere,
-Santa Caterina i la Ribera** presentan niveles elevados del indicador de
-presión residencial.
+Los barrios con alquileres más bajos no son necesariamente los más accesibles económicamente: un alquiler reducido puede estar acompañado de una renta disponible también más baja.
 
-Estos resultados fueron contrastados con un análisis independiente de
-los 73 barrios de Barcelona basado en técnicas de clustering. Los
-barrios de Ciutat Vella identificados como críticos en dicho estudio
-presentan también una presión significativa en este proyecto.
+Además, los datos corresponden a **contratos registrados**, por lo que barrios pequeños o con pocas operaciones pueden presentar una mayor volatilidad.
 
-La comparación no pretende demostrar que dos metodologías diferentes
-deban producir los mismos resultados, sino comprobar si determinadas
-conclusiones territoriales permanecen coherentes bajo enfoques
-distintos.
+### La accesibilidad depende de la relación entre alquiler y renta
 
-------------------------------------------------------------------------
+Para evaluar mejor la presión económica de la vivienda, el proyecto utiliza la **carga del alquiler** en lugar de analizar únicamente el precio absoluto.
 
-## 6. Deterioro reciente de la accesibilidad residencial
+En 2023 se observan diferencias muy importantes entre barrios:
 
-El análisis temporal **2021-2023** permitió detectar barrios cuya
-relación entre alquiler y renta se deterioró rápidamente.
+- **Torre Baró:** alrededor del **40 %** de carga del alquiler.
+- **La Marina del Prat Vermell:** alrededor del **91 %**.
 
-El caso extremo es **la Marina del Prat Vermell**, cuya evolución está
-fuertemente influenciada por las características particulares de su
-reducido mercado de alquiler y por cambios en la composición de las
-viviendas observadas. El resultado se conserva, pero debe tratarse como
-un caso especialmente sensible.
+Esto muestra que comparar únicamente los precios de alquiler puede producir conclusiones incompletas.
 
-Excluyendo este caso excepcional, destacan especialmente dos barrios.
+### La evolución también importa
 
-### La Bordeta
+Entre 2019 y 2023, algunos barrios presentan cambios importantes en su nivel de esfuerzo económico.
 
--   Carga estimada: **47 % → 68 %**
--   Evolución relativa: **+44 %**
--   Alquiler: **832 € → 1.326 € (+59 %)**
--   Renta mensual por persona: **1.755 € → 1.944 € (+11 %)**
+**Pedralbes** registra una de las mayores mejoras relativas de la carga del alquiler, mientras que **La Marina del Prat Vermell** presenta un fuerte deterioro durante el periodo.
 
-### La Verneda i la Pau
+Estos resultados deben interpretarse junto con la evolución de la renta, del alquiler y el volumen de observaciones disponible en cada barrio.
 
--   Carga estimada: **50 % → 65 %**
--   Evolución relativa: **+30 %**
--   Alquiler: **744 € → 1.064 € (+43 %)**
--   Renta mensual por persona: **1.497 € → 1.644 € (+10 %)**
+### El alquiler no representa todo el presupuesto
 
-En ambos casos, el deterioro no procede de una disminución de la renta
-disponible. La explicación matemática principal es una **desconexión
-entre la evolución del alquiler y la evolución de la renta**, con
-alquileres creciendo considerablemente más rápido.
+El coste de vida oficial utilizado como referencia para 2024 alcanza aproximadamente:
 
-Otros barrios como **la Sagrera, la Guineueta o Baró de Viver**
-presentan también este patrón, aunque con menor intensidad.
+**892 € por persona y mes, excluyendo la vivienda.**
 
-------------------------------------------------------------------------
+La estimación para 2025, actualizada mediante IPC por categoría, se sitúa alrededor de:
 
-## 7. Evolución inversa en barrios de renta alta
+**913 € por persona y mes**, seleccionando todas las categorías de gasto.
 
-Otros barrios presentan el fenómeno contrario.
+Incorporar estos gastos permite pasar de una comparación centrada únicamente en vivienda a una aproximación más completa del presupuesto mensual.
 
-### Pedralbes
+### La oferta de transporte es muy desigual
 
--   Alquiler: **1.699 € → 1.952 € (+15 %)**
--   Renta mensual por persona: **2.580 € → 3.917 € (+52 %)**
--   Carga estimada: **66 % → 50 %**
+Los datos GTFS muestran diferencias importantes en la intensidad de la oferta programada entre barrios.
 
-### Vallvidrera, el Tibidabo i les Planes
+Para el conjunto de Barcelona analizado, el modelo obtiene aproximadamente:
 
--   Alquiler: **1.237 € → 1.256 € (+2 %)**
--   Renta mensual por persona: **2.116 € → 2.845 € (+35 %)**
--   Carga estimada: **58 % → 44 %**
+- **1.539 servicios programados diarios de media**
+- **1.666 en días laborables**
+- **1.347 los sábados**
+- **1.088 los domingos**
 
-El análisis muestra que **un aumento del alquiler no implica
-necesariamente un deterioro del indicador** si la renta disponible
-aumenta todavía más rápidamente.
+La oferta programada durante el fin de semana es aproximadamente un **27 % inferior** a la observada en días laborables.
 
-------------------------------------------------------------------------
+### Precio y conectividad deben analizarse conjuntamente
 
-## 8. Posible efecto de composición demográfica
+La conectividad directa permite añadir una dimensión que el precio del alquiler no refleja: la capacidad de desplazarse hacia otros barrios sin transbordo.
 
-La fuerte evolución de la renta en determinados barrios de renta alta
-llevó a investigar posibles cambios en su composición demográfica.
+El análisis muestra que dos barrios con condiciones económicas similares pueden ofrecer niveles de conectividad muy diferentes.
 
-Entre 2021 y 2023 se observa un crecimiento importante de la población
-extranjera en Pedralbes y en varios barrios de Sarrià--Sant Gervasi.
-Este crecimiento coincide temporalmente con importantes incrementos de
-la renta disponible.
+Por este motivo, el proyecto no establece un ranking universal de barrios.
 
-Esto plantea una posible hipótesis:
+> **El barrio más adecuado depende del equilibrio entre presupuesto, renta disponible, gastos personales y necesidades de movilidad.**
 
-> Parte de la evolución de la renta media territorial podría reflejar
-> cambios en la composición socioeconómica de la población residente y
-> no únicamente un aumento de los ingresos de los mismos hogares.
+---
 
-Los datos disponibles **no permiten establecer una relación causal
-directa** entre nacionalidad, migración y nivel de renta. Además, los
-datos agregados de salarios por nacionalidad no permiten asumir que la
-población extranjera tenga, en promedio, mayores ingresos.
+## ¿Dónde vivir? — Herramienta interactiva de decisión
 
-Por tanto, este resultado se mantiene como una **hipótesis
-interpretativa**, no como una conclusión causal.
+La página **«¿Dónde vivir?»** constituye la síntesis del proyecto.
 
-------------------------------------------------------------------------
+En lugar de analizar cada dimensión de forma aislada, combina los principales indicadores económicos y de movilidad para ofrecer una visión global de cada barrio.
 
-## 9. Casos particulares y calidad de los datos
+### ¿Qué puede analizar el usuario?
 
-### La Marina del Prat Vermell
+Al seleccionar un barrio, el dashboard muestra:
 
-El barrio presenta una ruptura excepcional en la serie de alquiler.
+-  **Renta disponible mensual estimada**
+-  **Precio medio del alquiler**
+-  **Carga del alquiler**
+-  **Coste de vida seleccionado**
+-  **Coste mensual total con alquiler**
+-  **Renta restante estimada**
+-  **Oferta diaria de transporte público**
+-  **Número de líneas disponibles**
+-  **Número de barrios conectados directamente**
 
-La investigación mostró que se trata de un mercado de alquiler
-relativamente reducido, por lo que un cambio en la composición de las
-viviendas contratadas puede modificar fuertemente el promedio observado.
+### Un coste de vida adaptable al usuario
 
-El valor no se elimina: se conserva como observación real, pero se
-documenta su **alta sensibilidad al tamaño y composición del mercado**.
+El coste de vida no se trata como una cantidad fija.
 
-### Torre Baró
+El usuario puede seleccionar las categorías de gasto que desea incluir:
 
-Torre Baró presenta uno de los alquileres más bajos y una de las cargas
-estimadas más reducidas en 2023.
+**Esencial · Necesario variable · Discrecional**
 
-Sin embargo, su mercado de alquiler es pequeño y determinados períodos
-disponen de pocas observaciones. Por tanto, los resultados deben
-interpretarse con prudencia y no permiten considerar automáticamente
-Torre Baró como el barrio «más conveniente».
+El dashboard recalcula automáticamente:
 
-### Can Peguera
+`Coste de vida seleccionado`
 
-La serie de alquiler disponible no contiene observaciones
-suficientemente recientes para realizar la comparación de 2023.
+`Coste total mensual = Alquiler + Coste de vida seleccionado`
 
-En lugar de extrapolar o imputar artificialmente los valores faltantes,
-el barrio se mantiene como **dato no disponible** en los análisis
-correspondientes.
+`Renta restante = Renta estimada - Coste total mensual`
 
-------------------------------------------------------------------------
+Esto permite comparar barrios bajo diferentes hipótesis de gasto y adaptar el análisis a distintos perfiles.
 
-## 10. Movilidad: intensidad y conectividad no son equivalentes
+### Referencia temporal
 
-El análisis GTFS muestra que una mayor oferta diaria de servicios no
-implica necesariamente una mayor conectividad directa.
+Para mantener una comparación económica coherente, esta página utiliza:
 
-Un ejemplo destacado es **la Guineueta**:
+| Indicador | Referencia |
+|---|---|
+| Alquiler | Oficial 2025 |
+| Renta disponible | Estimación 2025 |
+| Coste de vida | Estimación 2025 |
+| Movilidad | GTFS 2026 |
 
--   **≈ 1.641 servicios programados diarios**
--   **13 líneas**
--   **62 barrios directamente conectados**
+La diferencia temporal de la movilidad es intencional: los indicadores económicos representan la situación comparativa de **2025**, mientras que GTFS 2026 proporciona la estructura de transporte utilizada como referencia más reciente en el proyecto.
 
-Mientras que **l'Antiga Esquerra de l'Eixample** registra
-aproximadamente:
+### Interpretación
 
--   **≈ 2.887 servicios diarios**
--   **22 líneas**
--   **61 barrios conectados**
+La herramienta no genera automáticamente un ranking universal.
 
-A pesar de disponer de una oferta considerablemente inferior y de menos
-líneas, la Guineueta presenta un alcance territorial directo comparable
-dentro de la red analizada.
+Un barrio con alquiler bajo puede presentar una renta disponible menor, mientras que otro más caro puede ofrecer una mejor relación entre renta, vivienda y movilidad.
 
-> **Intensidad del servicio ≠ alcance territorial de las conexiones**
+Por ello, **«¿Dónde vivir?» funciona como una herramienta de comparación y exploración**, dejando que las prioridades del usuario determinen qué combinación resulta más adecuada.
 
-Esto no significa que una red sea más «eficiente» que otra: el proyecto
-no mide tiempos de viaje, esperas, fiabilidad ni transbordos.
+---
 
-![Conectividad entre barrios](images/conectividad-barrios.png)
+## 🛠️ Arquitectura técnica y herramientas
 
-*La conectividad directa permite estudiar el alcance territorial de las
-líneas, una dimensión distinta de la intensidad de servicio.*
+El proyecto combina preparación de datos, modelado, análisis y visualización en un flujo de trabajo construido principalmente alrededor de **Power BI**.
 
-------------------------------------------------------------------------
+### Power Query — Preparación de datos
 
-## 11. Vivienda y movilidad: perfiles territoriales diferentes
+Power Query se utiliza para transformar y estructurar las diferentes fuentes antes de integrarlas en el modelo.
 
-El cruce exploratorio entre vivienda y movilidad revela que barrios con
-niveles similares de presión residencial pueden presentar situaciones de
-transporte muy diferentes.
+Entre las principales transformaciones:
 
-### Horta vs. Can Baró
+- limpieza y tipado de datos;
+- normalización de identificadores de barrios;
+- transformación de datos históricos de alquiler y renta;
+- creación de tablas intermedias para el cálculo de evoluciones;
+- estimación de la renta disponible 2024–2025;
+- actualización del coste de vida 2025 mediante IPC;
+- preparación de dimensiones y tablas para el modelo analítico.
 
-**Horta**
+### DAX — Indicadores y lógica analítica
 
--   Carga 2023: **≈45 %**
--   Oferta programada 2026: **≈2.300 servicios/día**
--   Barrios conectados: **60**
+Las medidas DAX permiten construir indicadores dinámicos y sensibles al contexto de filtros del dashboard.
 
-**Can Baró**
+Entre ellos:
 
--   Carga 2023: **≈45 %**
--   Oferta programada 2026: **≈551 servicios/día**
--   Barrios conectados: **33**
+- precio medio del alquiler;
+- renta disponible mensual;
+- carga del alquiler;
+- variaciones interanuales;
+- coste de vida seleccionado;
+- coste mensual total;
+- renta restante estimada;
+- oferta diaria de transporte;
+- número de líneas disponibles;
+- número de barrios conectados.
 
-Los dos barrios presentan niveles similares del indicador económico,
-pero condiciones de movilidad muy diferentes.
+La página **«¿Dónde vivir?»** utiliza además medidas dinámicas para recalcular los resultados según el barrio y las categorías de gasto seleccionadas.
 
-El mismo contraste aparece entre barrios con mayor presión.
+### BigQuery / SQL — Procesamiento de GTFS
 
-### La Bordeta vs. la Verneda i la Pau
+Los datos GTFS requieren un tratamiento específico debido al volumen y a la estructura relacional de los archivos.
 
-**La Bordeta**
+BigQuery y SQL se utilizan para procesar principalmente:
 
--   Carga 2023: **≈68 %**
--   Barrios conectados en 2026: **28**
+`routes · trips · stops · stop_times · calendar · calendar_dates`
 
-**La Verneda i la Pau**
+El procesamiento permite:
 
--   Carga 2023: **≈65 %**
--   Barrios conectados en 2026: **53**
+1. identificar los servicios activos;
+2. asociar rutas, viajes, horarios y paradas;
+3. distinguir autobús TMB y Metro/FGC;
+4. calcular la oferta programada por barrio;
+5. identificar las líneas disponibles;
+6. construir las conexiones directas entre barrios.
 
-Estos resultados muestran por qué **el coste de la vivienda por sí solo
-no permite determinar qué barrio se adapta mejor a una persona**.
+Para la conectividad, los barrios que comparten una misma línea se relacionan entre sí mediante SQL, permitiendo calcular el número de barrios directamente accesibles desde cada zona.
 
-------------------------------------------------------------------------
+### Power BI — Modelo y visualización
 
-## 12. Importante limitación temporal
+Power BI centraliza el modelo final y la experiencia interactiva del proyecto.
 
-El cruce anterior debe interpretarse con especial prudencia.
+El modelo relaciona los datos económicos, geográficos y de movilidad alrededor de la dimensión **Barrio**, permitiendo que los filtros se propaguen entre los diferentes análisis.
 
-Los indicadores económicos utilizados corresponden principalmente a
-**2023**, mientras que los datos GTFS utilizados para la movilidad
-corresponden a **2026**.
+El informe utiliza:
 
-> **Vivienda y movilidad no constituyen una fotografía simultánea de
-> Barcelona.**
+- KPIs dinámicos;
+- mapas por barrio;
+- series temporales;
+- comparaciones territoriales;
+- segmentadores interactivos;
+- formato condicional;
+- navegación entre páginas;
+- medidas dependientes del contexto de selección.
 
-Los resultados permiten explorar perfiles territoriales y posibles
-compromisos entre accesibilidad económica histórica reciente y
-conectividad observada en la red programada de 2026, pero **no permiten
-afirmar que esas mismas relaciones existieran en 2023**.
+### Flujo de trabajo
 
-Entre 2024 y 2026 pueden haber cambiado:
+`Fuentes oficiales → Power Query / SQL → Modelo de datos → DAX → Power BI → Dashboard interactivo`
 
--   los alquileres;
--   la renta disponible;
--   la composición demográfica;
--   las líneas de transporte;
--   la intensidad del servicio;
--   la conectividad entre barrios.
+---
 
-En consecuencia, la posición relativa de determinados barrios podría
-haberse modificado o incluso invertido.
+## Limitaciones del análisis
 
-Esta diferencia temporal constituye **una de las principales
-limitaciones del proyecto** y deberá revisarse cuando estén disponibles
-datos económicos comparables más recientes.
+El proyecto busca mantener una separación clara entre datos observados y estimaciones. Sin embargo, existen varias limitaciones que deben tenerse en cuenta al interpretar los resultados:
 
-------------------------------------------------------------------------
+- **Alquiler:** los datos corresponden a contratos registrados y no a precios actuales de oferta. Los barrios con pocas operaciones pueden presentar mayor volatilidad.
+- **Renta:** los datos oficiales por barrio terminan en 2023. Los valores 2024–2025 son estimaciones propias y no estadísticas oficiales.
+- **Coste de vida:** la EPF utiliza Catalunya como referencia territorial debido a la ausencia de datos equivalentes para los 73 barrios de Barcelona.
+- **Estimación 2025:** la evolución futura de cada barrio puede diferir de la dinámica histórica utilizada en el modelo.
+- **Movilidad:** GTFS representa servicios programados, no demanda real, puntualidad ni servicios efectivamente realizados.
+- **Conectividad:** una conexión indica la existencia de al menos una línea directa entre dos barrios; no mide tiempo de viaje, frecuencia, distancia ni necesidad de caminar.
+- **Comparación temporal:** los indicadores económicos de «¿Dónde vivir?» utilizan 2025, mientras que la red de transporte utilizada corresponde a GTFS 2026.
 
-## 13. Coste de vida
+Estas limitaciones no invalidan la comparación, pero definen el alcance dentro del cual deben interpretarse los resultados.
 
-Para complementar vivienda y movilidad, el proyecto incorpora una
-estimación del gasto mensual por persona basada en la **Encuesta de
-Presupuestos Familiares 2023 de Idescat**.
+---
 
-### Coste mensual estimado sin vivienda
+## Conclusión
 
-**821,47 € / persona**
+Este proyecto muestra cómo diferentes fuentes públicas pueden integrarse para analizar una pregunta urbana concreta:
 
-Descomposición:
+> **¿Cómo cambian las condiciones para vivir entre los diferentes barrios de Barcelona?**
 
--   **Gastos esenciales:** 390,86 €
--   **Gastos necesarios variables:** 161,52 €
--   **Gastos discrecionales:** 269,09 €
+El análisis demuestra que evaluar un barrio únicamente por el precio del alquiler ofrece una visión incompleta.
 
-Los datos corresponden a **Cataluña** y se utilizan como referencia para
-Barcelona, no como una estimación específica de cada barrio.
+La relación entre **alquiler, renta disponible, coste de vida y movilidad** permite construir una comparación más amplia y entender mejor los compromisos existentes entre presupuesto y accesibilidad.
 
-Los gastos relacionados directamente con la vivienda se excluyen para
-evitar contabilizarlos nuevamente junto al alquiler.
+El objetivo final no es determinar un único «mejor barrio», sino proporcionar una herramienta transparente y explorable que permita comparar los **73 barrios de Barcelona** desde diferentes perspectivas.
 
-![Coste de vida](images/coste-vida.png)
+---
 
-*Estimación del coste de vida mensual por persona, excluyendo la
-vivienda.*
+### Autor
 
-------------------------------------------------------------------------
+**Guillaume Sánchez**
 
-## 14. ¿Dónde vivir en Barcelona?
+Proyecto de portfolio desarrollado con:
 
-La última página del informe transforma el análisis en una **herramienta
-exploratoria de decisión**.
+**Power BI · Power Query · DAX · SQL · BigQuery**
+ 
+Barcelona — Análisis de datos urbanos
 
-El usuario puede seleccionar un barrio y consultar conjuntamente:
-
--   alquiler medio;
--   renta disponible;
--   presión residencial;
--   coste de vida seleccionado;
--   presupuesto restante estimado;
--   oferta diaria de transporte;
--   número de líneas;
--   conectividad directa con otros barrios.
-
-Los gastos esenciales están incluidos por defecto y pueden añadirse
-gastos variables y discrecionales según la situación del usuario.
-
-El objetivo **no es generar un ranking universal**.
-
-Dos personas con presupuestos, hábitos y necesidades de movilidad
-diferentes pueden considerar adecuados barrios completamente distintos.
-Por esta razón, el proyecto favorece una **exploración multicriterio**
-frente a la creación de un único score de clasificación.
-
-![¿Dónde vivir en Barcelona?](images/donde-vivir.png)
-
-*Herramienta de decisión para comparar vivienda, presupuesto y movilidad
-según las prioridades del usuario.*
-
-------------------------------------------------------------------------
-
-## 15. Limitaciones
-
-Las principales limitaciones del análisis son:
-
--   **Temporalidad:** los datos económicos de referencia llegan a 2023,
-    mientras que la movilidad analizada corresponde a GTFS 2026.
--   **Indicador de vivienda:** compara alquiler por vivienda con renta
-    disponible por persona y no representa el esfuerzo presupuestario
-    real de un hogar.
--   **Coste de vida:** los datos detallados de la EPF corresponden a
-    Cataluña y se utilizan como proxy para Barcelona.
--   **Ruptura estadística EPF:** los datos de 2023 presentan una ruptura
-    de serie señalada por Idescat.
--   **GTFS:** representa oferta programada, no puntualidad, tiempos
-    reales de viaje, ocupación o calidad del servicio.
--   **Cobertura de transporte:** se analizan Autobús TMB y Metro/FGC; el
-    indicador no representa la totalidad del sistema metropolitano.
--   **Conectividad:** compartir una línea permite identificar una
-    conexión directa, pero no informa sobre la duración o conveniencia
-    real del trayecto.
--   **Mercados pequeños:** barrios con pocos contratos de alquiler
-    pueden presentar promedios más volátiles.
--   **Datos faltantes:** no se imputaron valores cuando no existían
-    observaciones suficientemente fiables.
--   **Demografía:** la coincidencia entre cambios demográficos y
-    evolución de la renta no demuestra causalidad.
-
-Estas limitaciones no se corrigen mediante supuestos arbitrarios: se
-documentan para definir con claridad **qué puede y qué no puede
-concluirse a partir de los datos**.
-
-------------------------------------------------------------------------
-
-## 16. Conclusión
-
-El proyecto muestra que analizar Barcelona únicamente mediante el precio
-del alquiler proporciona una visión incompleta de las diferencias
-territoriales.
-
-La combinación de **alquiler, renta disponible, coste de vida, oferta de
-transporte y conectividad** permite identificar perfiles de barrios muy
-diferentes.
-
-Un barrio puede presentar un alquiler relativamente accesible pero una
-conectividad limitada. Otro puede soportar una mayor presión residencial
-y disponer al mismo tiempo de una buena integración en la red de
-transporte.
-
-El análisis temporal muestra además que la situación de los barrios no
-es estática: algunos territorios presentan una fuerte desconexión
-reciente entre la evolución de los alquileres y la renta disponible.
-
-Al mismo tiempo, la diferencia de período entre los indicadores
-económicos y la movilidad impide convertir estos resultados en una
-clasificación definitiva de los barrios en 2026.
-
-Por este motivo, el proyecto no pretende responder:
-
-> **«¿Cuál es el mejor barrio de Barcelona?»**
-
-sino a una pregunta más útil:
-
-> **«¿Qué compromisos existen entre vivienda, recursos económicos y
-> movilidad, y qué barrios pueden adaptarse mejor a diferentes
-> prioridades?»**
-
-------------------------------------------------------------------------
-
-## Stack técnico
-
-**Power BI · Power Query · DAX · BigQuery · SQL · Excel**
-
-**73 barrios · Vivienda y renta: 2019-2023 · Coste de vida: 2023 ·
-Movilidad GTFS: 2026**
-
-------------------------------------------------------------------------
-
-## Autor
-
-**Guillaume Sanchez**
-
-Proyecto de análisis de datos desarrollado como estudio independiente
-sobre vivienda, renta, coste de vida y movilidad en Barcelona.
