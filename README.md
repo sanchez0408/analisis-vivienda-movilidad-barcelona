@@ -8,10 +8,9 @@ El análisis integra datos oficiales sobre **alquiler, renta disponible, coste d
 
 > **Periodo analizado:** 2019–2026  
 > **Ámbito geográfico:** 73 barrios de Barcelona  
-> **Herramientas:** Power BI · Power Query · DAX · BigQuery / SQL  
+> **Herramientas:** Excel · Power BI · Power Query · DAX · BigQuery / SQL  
 > **Fuentes principales:** Ajuntament de Barcelona · Generalitat de Catalunya / INCASÒL · Idescat · ATM
 
-![Barcelona Dashboard](images_v2/presentacion_barcelona.png)
 
 ### Dashboard interactivo
 
