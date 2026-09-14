@@ -15,7 +15,7 @@ El análisis integra datos oficiales sobre **alquiler, renta disponible, coste d
 
 ### Dashboard interactivo
 
- **[Explorar el informe en Power BI](AQUÍ_TU_ENLACE_POWER_BI)**
+ **[Explorar el informe en Power BI](https://app.powerbi.com/view?r=eyJrIjoiODRhMDIxYTktMmEwZC00OWFlLTkxMzgtYzg4MDRjNzZhZjhiIiwidCI6IjRmNTk4MmIyLWQ1MzgtNDVkMC05OWFiLTdkZWIyMjU2ODFkYSJ9)**
 
 ---
 
@@ -25,7 +25,7 @@ El análisis integra datos oficiales sobre **alquiler, renta disponible, coste d
 |---|---|---|
 |  Alquiler | Contratos de alquiler registrados | 2019–2026* |
 |  Renta disponible | Renta disponible de los hogares per cápita | 2019–2023 |
-|  Coste de vida | Encuesta de Presupuestos Familiares | 2024 |
+|  Coste de vida | Encuesta de Presupuestos Familiares | 2023 |
 |  Movilidad | Oferta programada TMB y Metro / FGC | 2026 |
 
 \* Los datos de alquiler de 2026 corresponden a un periodo parcial.
@@ -395,7 +395,21 @@ Por ello, **«¿Dónde vivir?» funciona como una herramienta de comparación y 
 
 ## Arquitectura técnica y herramientas
 
-El proyecto combina preparación de datos, modelado, análisis y visualización en un flujo de trabajo construido principalmente alrededor de **Power BI**.
+El proyecto combina Excel, Power Query, DAX, SQL/BigQuery y Power BI para la preparación, transformación, modelado, análisis y visualización de los datos.
+
+### Excel — Preparación y estructuración inicial
+
+Excel se utiliza como etapa inicial para organizar y estructurar determinados conjuntos de datos antes de su importación en Power BI.
+
+Entre las principales tareas realizadas:
+
+- revisión y organización de los datos descargados de las fuentes oficiales;
+- selección de variables relevantes para el análisis;
+- estructuración de tablas y columnas;
+- homogeneización inicial de formatos;
+- preparación de archivos de trabajo antes de su transformación en Power Query.
+
+Esta etapa permite disponer de una estructura de datos clara antes de realizar las transformaciones, relaciones y cálculos dentro del modelo de Power BI.
 
 ### Power Query — Preparación de datos
 
@@ -468,7 +482,7 @@ El informe utiliza:
 
 ### Flujo de trabajo
 
-`Fuentes oficiales → Power Query / SQL → Modelo de datos → DAX → Power BI → Dashboard interactivo`
+`Fuentes oficiales → Excel / Power Query / SQL → Modelo de datos → DAX → Power BI → Dashboard interactivo`
 
 ---
 
@@ -506,9 +520,9 @@ El objetivo final no es determinar un único «mejor barrio», sino proporcionar
 
 **Guillaume Sánchez**
 
-Proyecto de portfolio desarrollado con:
+Proyecto desarrollado con:
 
-**Power BI · Power Query · DAX · SQL · BigQuery**
+**Excel · Power BI · Power Query · DAX · SQL · BigQuery**
  
 Barcelona — Análisis de datos urbanos
 
