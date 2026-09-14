@@ -45,7 +45,7 @@ Para responder a esta pregunta, el análisis se estructura en cuatro dimensiones
 
 -  **Vivienda:** evolución y diferencias del precio medio del alquiler.
 -  **Renta:** distribución de la renta disponible y esfuerzo económico asociado al alquiler.
--  **Coste de vida:** estimación de los gastos mensuales por persona, excluyendo la vivienda.
+-  **Coste de vida:** estructura de los gastos mensuales por persona y estimación de su evolución, excluyendo la vivienda.
 -  **Movilidad:** oferta programada de transporte público y conexiones directas entre barrios.
 
 El proyecto no pretende identificar un único «mejor barrio», sino proporcionar indicadores que permitan comparar diferentes alternativas según las prioridades de cada usuario.
@@ -149,11 +149,13 @@ Los gastos relacionados con la vivienda se excluyen del cálculo para evitar una
 
 ---
 
-### IPC 2025 — Idescat / INE
+### IPC 2024-2025 — Idescat / INE
 
 Índice de Precios de Consumo de Catalunya por grupos de consumo, utilizado para actualizar las categorías de gasto de 2024 a 2025.
 
-[Consultar IPC por grupos de consumo](https://www.idescat.cat/indicadors/?id=aec&n=15361&lang=es)
+[Consultar IPC 2024 por grupos de consumo](https://www.idescat.cat/indicadors/?id=aec&n=15361&lang=es&t=202400)
+
+[Consultar IPC 2025 por grupos de consumo](https://www.idescat.cat/indicadors/?id=aec&n=15361&lang=es)
 
 ---
 
@@ -296,11 +298,11 @@ Estos resultados deben interpretarse junto con la evolución de la renta, del al
 
 ### El alquiler no representa todo el presupuesto
 
-El coste de vida oficial utilizado como referencia para 2024 alcanza aproximadamente:
+La actualización de la estructura detallada de gasto de 2023 mediante el IPC por categoría proporciona una estimación para 2024 de aproximadamente:
 
 **892 € por persona y mes, excluyendo la vivienda.**
 
-La estimación para 2025, actualizada mediante IPC por categoría, se sitúa alrededor de:
+La actualización posterior mediante la variación media anual del IPC 2025 por categoría sitúa la estimación de 2025 alrededor de:
 
 **913 € por persona y mes**, seleccionando todas las categorías de gasto.
 
@@ -324,8 +326,6 @@ La oferta programada durante el fin de semana es aproximadamente un **27 % infer
 La conectividad directa permite añadir una dimensión que el precio del alquiler no refleja: la capacidad de desplazarse hacia otros barrios sin transbordo.
 
 El análisis muestra que dos barrios con condiciones económicas similares pueden ofrecer niveles de conectividad muy diferentes.
-
-Por este motivo, el proyecto no establece un ranking universal de barrios.
 
 > **El barrio más adecuado depende del equilibrio entre presupuesto, renta disponible, gastos personales y necesidades de movilidad.**
 
@@ -481,7 +481,13 @@ El informe utiliza:
 
 ### Flujo de trabajo
 
-`Fuentes oficiales → Excel / Power Query / SQL → Modelo de datos → DAX → Power BI → Dashboard interactivo`
+Fuentes oficiales
+→ Excel (preparación inicial)
+→ Power Query / SQL (transformación y procesamiento)
+→ Modelo de datos
+→ DAX
+→ Power BI
+→ Dashboard interactivo
 
 ---
 
