@@ -77,7 +77,8 @@ Relaciona el alquiler mensual con la renta disponible mensual mediante la **carg
 Este indicador permite evaluar qué proporción de la renta disponible representa el alquiler en cada barrio.
 
 ### Coste de vida
-Analiza el gasto medio mensual por persona a partir de la **Encuesta de Presupuestos Familiares 2024**, excluyendo la vivienda para evitar una doble contabilización con el alquiler.
+
+Analiza el **gasto medio mensual por persona** a partir de la **Despesa anual per grups de despesa ECOICOP/EPF (3 dígits) de Catalunya, 2023**, utilizando su mayor nivel de detalle para excluir los componentes asociados a la vivienda y evitar una doble contabilización con el alquiler.
 
 Los gastos se agrupan en tres categorías:
 
@@ -98,10 +99,10 @@ Integra vivienda, renta, coste de vida y movilidad en una página interactiva or
 
 La comparación económica se homogeneiza en **2025** mediante:
 
-- alquiler oficial 2025;
-- renta disponible estimada 2025;
-- coste de vida estimado 2025;
-- red de transporte GTFS 2026.
+- alquiler oficial 2025
+- renta disponible estimada 2025
+- coste de vida estimado 2025
+- red de transporte GTFS 2026
 
 El usuario puede seleccionar diferentes categorías de gasto y comparar cómo cambian el coste mensual total, la renta restante y los indicadores de movilidad según el barrio.
 
@@ -109,46 +110,71 @@ El usuario puede seleccionar diferentes categorías de gasto y comparar cómo ca
 
 ## Datos y fuentes
 
-El proyecto combina diferentes fuentes públicas con distintas granularidades y periodos temporales. Para mantener la trazabilidad del análisis, se distingue entre **datos oficiales**, **estimaciones propias** y **datos utilizados como referencia territorial**.
+---
 
-| Dimensión | Fuente | Granularidad | Periodo | Tipo |
-|---|---|---|---|---|
-|  Alquiler | Ajuntament de Barcelona / Generalitat de Catalunya – INCASÒL | Barrio | 2019–2026* | Oficial |
-|  Renta disponible | Ajuntament de Barcelona – Departament d’Estadística i Difusió de Dades | Barrio | 2019–2023 | Oficial |
-|  Coste de vida | Idescat – Encuesta de Presupuestos Familiares (EPF) | Catalunya | 2024 | Oficial / referencia territorial |
-|  Inflación | IPC 2025 por categorías | Catalunya | 2025 | Oficial |
-|  Transporte público | Autoritat del Transport Metropolità (ATM) – GTFS | Paradas, líneas y servicios | 2026 | Oficial |
-|  Geografía | Ajuntament de Barcelona | 73 barrios | — | Oficial |
+El proyecto utiliza principalmente datos públicos procedentes de organismos oficiales.
 
-\* Los datos de alquiler de 2026 corresponden a un periodo parcial y no representan un año completo.
-
-### Alquiler
+### Alquiler — Generalitat de Catalunya / INCASÒL
 
 Los datos proceden de la explotación estadística de las **fianzas de alquiler depositadas en INCASÒL** y permiten analizar el precio medio mensual de los contratos registrados por barrio.
 
 Por este motivo, los valores representan alquileres contractuales registrados y no deben interpretarse como precios actuales de oferta del mercado inmobiliario.
 
-### Renta disponible
+[Consultar Precio medio (€) del alquiler de viviendas](https://portaldades.ajuntament.barcelona.cat/es/estad%C3%ADsticas/b37xv8wcjh)
+
+---
+
+### Renta disponible — Ajuntament de Barcelona
 
 Se utiliza la **Renta Disponible de los Hogares per cápita (RDLpc)** publicada por el Ajuntament de Barcelona.
 
 El último año oficial utilizado a nivel de barrio es **2023**. Los valores posteriores utilizados en la página «¿Dónde vivir?» son estimaciones propias y se identifican explícitamente como tales.
 
-### Coste de vida
+[Consultar Renta disponible de los hogares per cápita (RDLpc, €)](https://portaldades.ajuntament.barcelona.cat/es/estad%C3%ADsticas/nzjnewo7n6)
 
-El análisis parte de la **Encuesta de Presupuestos Familiares (EPF) 2024** publicada por Idescat.
+Para la estimación de 2025 también se utiliza la evolución trimestral de la Renta Disponible de los Hogares de Barcelona publicada por la Oficina Municipal de Dades (OMD).
+
+[Consultar informe RDL Barcelona — 4º trimestre 2025](https://bcnroc.ajuntament.barcelona.cat/jspui/bitstream/11703/147552/1/Informe_RDL_BCN_4rt_Trimestre_25.pdf)
+
+---
+
+### Coste de vida — Idescat
+
+El análisis parte de la **Despesa anual per grups de despesa ECOICOP/EPF (3 dígits) de Catalunya, 2023** publicada por Idescat.
 
 Al no disponer de una desagregación equivalente para los 73 barrios de Barcelona, los datos de **Catalunya se utilizan como referencia territorial**.
 
 Los gastos relacionados con la vivienda se excluyen del cálculo para evitar una doble contabilización con el alquiler.
 
-### Movilidad
+[Consultar EPF 2023 — Idescat](https://www.idescat.cat/pub/?id=edcl&n=9433&lang=es)
+
+---
+
+### IPC 2025 — Idescat / INE
+
+Índice de Precios de Consumo de Catalunya por grupos de consumo, utilizado para actualizar las categorías de gasto de 2024 a 2025.
+
+[Consultar IPC por grupos de consumo](https://www.idescat.cat/indicadors/?id=aec&n=15361&lang=es)
+
+---
+
+### Movilidad — Autoritat del Transport Metropolità (ATM)
 
 La oferta de transporte se construye a partir de datos **GTFS 2026 de la Autoritat del Transport Metropolità (ATM)**.
 
 El modelo procesa rutas, viajes, paradas, horarios y calendarios para estimar la oferta programada de autobús TMB y Metro/FGC por barrio.
 
 Los indicadores representan **servicios programados**, no demanda de viajeros, puntualidad ni servicio realmente ejecutado.
+
+[Consultar datos de movilidad de la ATM](https://www.atm.cat/)
+
+---
+
+### Geografía — Open Data Barcelona
+
+Geometrías y unidades administrativas oficiales utilizadas para representar los **73 barrios de Barcelona**.
+
+[Consultar unidades administrativas de Barcelona](https://opendata-ajuntament.barcelona.cat/)
 
 ---
 
@@ -202,19 +228,29 @@ Finalmente:
 
 Este método mantiene la tendencia general de Barcelona como referencia y utiliza la evolución histórica de los barrios únicamente como una **modulación controlada**, no como una extrapolación directa.
 
-### Estimación del coste de vida 2025
+### Estimación del coste de vida 2024–2025
 
-El punto de partida es el gasto oficial por persona de la **EPF 2024 de Catalunya**.
+El modelo utiliza como punto de partida una estructura detallada de gasto por persona correspondiente a **2023**.
 
-Para aproximar los valores de 2025, cada categoría de gasto se actualiza mediante su correspondiente evolución del **IPC 2025**.
+Se mantiene esta base debido a que su mayor nivel de desagregación permite identificar con mayor precisión los componentes del gasto y excluir los costes asociados a la vivienda, evitando su doble contabilización con el alquiler.
 
-De forma simplificada:
+Los importes se actualizan posteriormente en dos etapas:
 
-`Coste categoría 2025 = Coste categoría 2024 × (1 + IPC categoría 2025)`
+**1. Estimación 2024**
 
-Esto permite conservar diferencias entre categorías de consumo en lugar de aplicar una única tasa de inflación a todos los gastos.
+Cada categoría de gasto de 2023 se actualiza mediante la variación del IPC correspondiente a su grupo de consumo.
 
-La vivienda se mantiene excluida para evitar contabilizar dos veces el coste del alojamiento.
+`Coste 2024 = Coste 2023 × (1 + IPC 2024 de la categoría)`
+
+**2. Estimación 2025**
+
+Los valores obtenidos para 2024 se actualizan nuevamente utilizando la **variación media anual del IPC 2025 por grupo de consumo**.
+
+`Coste 2025 = Coste estimado 2024 × (1 + IPC medio anual 2025 de la categoría)`
+
+Este procedimiento permite conservar una estructura de gasto más detallada que la disponible en las tablas agregadas posteriores y aplicar una evolución de precios diferente según el tipo de consumo.
+
+Los resultados deben interpretarse como **estimaciones**, no como valores oficiales observados para 2024 o 2025.
 
 ### Comparación final 2025
 
@@ -357,7 +393,7 @@ Por ello, **«¿Dónde vivir?» funciona como una herramienta de comparación y 
 
 ---
 
-## 🛠️ Arquitectura técnica y herramientas
+## Arquitectura técnica y herramientas
 
 El proyecto combina preparación de datos, modelado, análisis y visualización en un flujo de trabajo construido principalmente alrededor de **Power BI**.
 
