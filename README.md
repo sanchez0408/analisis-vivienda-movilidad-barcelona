@@ -369,22 +369,7 @@ El dashboard recalcula automáticamente:
 
 Esto permite comparar barrios bajo diferentes hipótesis de gasto y adaptar el análisis a distintos perfiles.
 
-### Referencia temporal
-
-Para mantener una comparación económica coherente, esta página utiliza:
-
-| Indicador | Referencia |
-|---|---|
-| Alquiler | Oficial 2025 |
-| Renta disponible | Estimación 2025 |
-| Coste de vida | Estimación 2025 |
-| Movilidad | GTFS 2026 |
-
-La diferencia temporal de la movilidad es intencional: los indicadores económicos representan la situación comparativa de **2025**, mientras que GTFS 2026 proporciona la estructura de transporte utilizada como referencia más reciente en el proyecto.
-
 ### Interpretación
-
-La herramienta no genera automáticamente un ranking universal.
 
 Un barrio con alquiler bajo puede presentar una renta disponible menor, mientras que otro más caro puede ofrecer una mejor relación entre renta, vivienda y movilidad.
 
