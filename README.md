@@ -492,6 +492,24 @@ Estas limitaciones no invalidan la comparación, pero definen el alcance dentro 
 
 ---
 
+## Líneas de análisis futuras
+
+El proyecto permite identificar barrios que presentan niveles especialmente elevados de carga del alquiler y evoluciones atípicas a lo largo del periodo analizado.
+
+Una posible extensión del análisis consistiría en estudiar con mayor profundidad las **causas de la presión del alquiler** en estos barrios, considerando factores como:
+
+- la evolución relativa del alquiler y de la renta disponible;
+- la transformación del parque residencial;
+- el volumen y la composición de los contratos registrados;
+- el peso del alquiler temporal y turístico;
+- los procesos de transformación urbana y residencial.
+
+Barrios como **la Marina del Prat Vermell, la Bordeta, el Raval, el Barri Gòtic o la Verneda i la Pau** presentan patrones que podrían justificar un análisis específico.
+
+Este análisis requeriría incorporar nuevas fuentes de datos y contrastar cada hipótesis antes de establecer relaciones causales.
+
+---
+
 ## Conclusión
 
 Este proyecto muestra cómo diferentes fuentes públicas pueden integrarse para analizar una pregunta urbana concreta:
