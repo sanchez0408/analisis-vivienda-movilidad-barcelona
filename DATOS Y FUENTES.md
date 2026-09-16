@@ -58,7 +58,7 @@ El modelo procesa rutas, viajes, paradas, horarios y calendarios para estimar la
 
 Los indicadores representan **servicios programados**, no demanda de viajeros, puntualidad ni servicio realmente ejecutado.
 
-[Consultar datos de movilidad de la ATM](https://www.atm.cat/)
+**Fuente: Autoritat del Transport Metropolità (ATM), datos GTFS 2026. Elaboración propia.**
 
 ---
 
@@ -66,4 +66,6 @@ Los indicadores representan **servicios programados**, no demanda de viajeros, p
 
 Geometrías y unidades administrativas oficiales utilizadas para representar los **73 barrios de Barcelona**.
 
-[Consultar unidades administrativas de Barcelona](https://opendata-ajuntament.barcelona.cat/)
+**Fuente: Ajuntament de Barcelona — Open Data BCN / CartoBCN, “Unidades administrativas de la ciudad de Barcelona”.**
+
+[Consultar límites administrativos de barrios](https://opendata-ajuntament.barcelona.cat/data/es/dataset/20170706-districtes-barris)
