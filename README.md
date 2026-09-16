@@ -25,9 +25,10 @@ El análisis integra datos oficiales sobre **alquiler, renta disponible, coste d
 |  Alquiler | Contratos de alquiler registrados | 2019–2026* |
 |  Renta disponible | Renta disponible de los hogares per cápita | 2019–2023 |
 |  Coste de vida | Encuesta de Presupuestos Familiares | 2023 |
-|  Movilidad | Oferta programada TMB y Metro / FGC | 2026 |
+|  Movilidad | Oferta programada TMB y Metro / FGC | 2026* |
 
 \* Los datos de alquiler de 2026 corresponden a un periodo parcial.
+\* Periodo actual, GTFS ATM, periodo analizado: 05/08/2026–31/12/2026.
 
 Para la página **¿Dónde vivir?**, el proyecto construye además una comparación homogénea para **2025**, utilizando el alquiler oficial de 2025 y estimaciones de renta disponible y coste de vida basadas en datos oficiales y tendencias recientes.
 
@@ -84,7 +85,7 @@ Los gastos se agrupan en tres categorías:
 **Esencial · Necesario variable · Discrecional**
 
 ### Oferta de transporte público
-Analiza la oferta programada de **autobús TMB y Metro/FGC** a partir de datos GTFS 2026.
+Analiza la oferta programada de **autobús TMB y Metro/FGC**
 
 Permite comparar la intensidad del servicio entre barrios y observar diferencias entre días laborables y fines de semana.
 
@@ -101,7 +102,7 @@ La comparación económica se homogeneiza en **2025** mediante:
 - alquiler oficial 2025
 - renta disponible estimada 2025
 - coste de vida estimado 2025
-- red de transporte GTFS 2026
+- red de transporte GTFS (actual)
 
 El usuario puede seleccionar diferentes categorías de gasto y comparar cómo cambian el coste mensual total, la renta restante y los indicadores de movilidad según el barrio.
 
