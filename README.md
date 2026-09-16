@@ -28,6 +28,7 @@ El análisis integra datos oficiales sobre **alquiler, renta disponible, coste d
 |  Movilidad | Oferta programada TMB y Metro / FGC | 2026* |
 
 \* Los datos de alquiler de 2026 corresponden a un periodo parcial.
+
 \* Periodo actual, GTFS ATM, periodo analizado: 05/08/2026–31/12/2026.
 
 Para la página **¿Dónde vivir?**, el proyecto construye además una comparación homogénea para **2025**, utilizando el alquiler oficial de 2025 y estimaciones de renta disponible y coste de vida basadas en datos oficiales y tendencias recientes.
